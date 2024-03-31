@@ -140,13 +140,13 @@ def game(circle_Color, pos):
         clock.tick(60)
 
         t_now=time.localtime()
-        if (t_now.tm_sec - t_start.tm_sec) % 5 == 0:
+        if (t_now.tm_sec - t_start.tm_sec) % 3 == 0:
             dot=randint(0,len(dots)-1)
-            dots[dot]['pas'] += 6
+            dots[dot]['pas'] += 8
             time.sleep(1)
 
         if len(field) != 0:
-            if (t_now.tm_sec - t_start.tm_sec) % 2 == 0:
+            if (t_now.tm_sec - t_start.tm_sec) % 6 == 0:
                 b=r(field)
                 pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
                 time.sleep(1)
