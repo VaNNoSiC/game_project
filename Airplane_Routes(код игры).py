@@ -114,8 +114,9 @@ def game(circle_Color, pos):
     dots=[]
     class point():
         def __init__(self,field):
-            self.coords=field.pop(randint(0, len(field)-1))
-            dots.append((self.coords[0]*80,self.coords[1]*80))
+            if len(field) != 0:
+                self.coords=field.pop(randint(0, len(field)-1))
+                dots.append({'coords': (self.coords[0]*80,self.coords[1]*80), 'pas': 0})
 
     def r(field):
         return point(field)
@@ -133,31 +134,22 @@ def game(circle_Color, pos):
     t_start=time.localtime()
     b=r(field)
     pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
+    b=r(field)
+    pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
     while running:
         clock.tick(60)
 
-        if len(field)==0:
-            time.sleep(2)
-            running=False
-            pygame.quit()
-
-        for i in dots:
-            pos += 1
-            if pos <= 10:
-                circle_Color = GREEN
-            elif pos <= 20:
-                circle_Color = ORANGE
-            elif pos <= 30:
-                circle_Color =  RED
-            elif pos == 35:
-                pass
-
-
         t_now=time.localtime()
-        if (t_now.tm_sec - t_start.tm_sec) % 10 == 0:
-            b=r(field)
-            pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
+        if (t_now.tm_sec - t_start.tm_sec) % 5 == 0:
+            dot=randint(0,len(dots)-1)
+            dots[dot]['pas'] += 6
             time.sleep(1)
+
+        if len(field) != 0:
+            if (t_now.tm_sec - t_start.tm_sec) % 2 == 0:
+                b=r(field)
+                pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
+                time.sleep(1)
 
         for event in pygame.event.get():
 
@@ -168,8 +160,8 @@ def game(circle_Color, pos):
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 print(event.pos)
                 for i in dots:
-                    if ((i[0]-10 <= event.pos[0] and i[0]+10 >= event.pos[0]) and (i[1]-10 <= event.pos[1] and i[1]+10 >= event.pos[1])):
-                        C.append((i[0], i[1]))
+                    if ((i['coords'][0]-10 <= event.pos[0] and i['coords'][0]+10 >= event.pos[0]) and (i['coords'][1]-10 <= event.pos[1] and i['coords'][1]+10 >= event.pos[1])):
+                        C.append((i['coords'][0], i['coords'][1]))
                         print(C)
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3: #добавляем линии
@@ -186,7 +178,15 @@ def game(circle_Color, pos):
 
         screen.blit(image, (0, 0))
         for j in dots:
-            pygame.draw.circle(screen, circle_Color, (j[0], j[1]), 13, 2)
+
+            if j['pas']<=10:
+                circle_Color = GREEN
+            elif j['pas'] <= 20:
+                circle_Color = ORANGE
+            elif j['pas'] <= 30 or j['pas'] > 30:
+                circle_Color =  RED
+
+            pygame.draw.circle(screen, circle_Color, (j['coords'][0], j['coords'][1]), 13, 5)
         for j in lines:
             pygame.draw.aaline(screen, PINK, j['start'], j['end'], 2)
 
