@@ -20,7 +20,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen = pygame.display.set_mode((1280, 720),0,32)
 
 
-icon = pygame.image.load('Objects/flyicon.png')
+icon = pygame.image.load('flyicon.png')
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Airplane Routes",("icon.png"))
 
@@ -40,7 +40,7 @@ def draw_text(text, font, color, surface, x, y):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
-    image = pygame.image.load('Objects/holl_nobut.png').convert_alpha()
+    image = pygame.image.load('holl_nobut.png').convert_alpha()
     screen.blit(image, (1, 1))
 
 click = False
@@ -109,7 +109,7 @@ def main_menu():
 
 def game(circle_Color, pos):
 
-    image = pygame.image.load('Objects/field.png').convert_alpha()
+    image = pygame.image.load('field.png').convert_alpha()
     screen.blit(image, (0, 0))
     dots=[]
     class point():
@@ -199,7 +199,7 @@ def game(circle_Color, pos):
 
 
 def rules():
-    rules = pygame.image.load('Objects/rules.png').convert_alpha()
+    rules = pygame.image.load('rules.png').convert_alpha()
     screen.blit(rules, (0, 0))
     running = True
     while running:
@@ -218,7 +218,7 @@ def rules():
 
 
 def save():
-    save = pygame.image.load('Objects/save.png').convert_alpha()
+    save = pygame.image.load('save.png').convert_alpha()
     screen.blit(save, (0, 0))
     running = True
     while running:
