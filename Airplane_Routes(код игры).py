@@ -146,7 +146,7 @@ def game(circle_Color, pos):
             time.sleep(1)
 
         if len(field) != 0:
-            if (t_now.tm_sec - t_start.tm_sec) % 6 == 0:
+            if (t_now.tm_sec - t_start.tm_sec) % 10 == 0:
                 b=r(field)
                 pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
                 time.sleep(1)
