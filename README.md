@@ -1,2 +1,1 @@
-Скачайте папки "build", "dist" и ярлык "Airplane_Routes" в удобное место и запустите игру с помощью ярлыка "Airplane_Routes(ярлык игры)", спасибо)...
-
+Код игры вы можете посмотреть открыв файл "Airplane_Routes(код игры)". Для запуска игры разархивируйте архив "Airplane Routes" и откройте игры по пути: Airplane Routes.rar\dist\Airplane_Routes.exe.
