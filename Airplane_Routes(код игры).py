@@ -1,4 +1,4 @@
-import pygame, sys, time
+import pygame, sys, time              # импортируем библиотеки
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 from random import *
@@ -31,11 +31,9 @@ font = pygame.font.SysFont(None, 20)
 pos=0
 circle_Color = (0, 255, 0)
 
+#-------------------------------------------------------------------------------
 
-
-
-
-def draw_text(text, font, color, surface, x, y):
+def draw_text(text, font, color, surface, x, y):     # вывод текста на экран
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -46,8 +44,9 @@ def draw_text(text, font, color, surface, x, y):
 click = False
 
 
+#-------------------------------------------------------------------------------
 
-def main_menu():
+def main_menu():       # главное меню
     while True:
 
         screen.fill((0,0,0))
@@ -106,8 +105,9 @@ def main_menu():
         mainClock.tick(60)
 
 
+#-------------------------------------------------------------------------------
 
-def game(circle_Color, pos):
+def game(circle_Color, pos):   # игровой процесс
 
 
     image = pygame.image.load('field.png').convert_alpha()
@@ -130,7 +130,8 @@ def game(circle_Color, pos):
     field=[(3,7),(5,8),(7,5),(10,4),(7,8),(9,6),(11,7),(13,6),(15,4),(1,3),(2,1),(4,2),(7,1),(10,2)]
 
 
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+
     clock = pygame.time.Clock()
     font_type = pygame.font.Font(None, 45)
     C=[]
@@ -138,7 +139,7 @@ def game(circle_Color, pos):
     planes=[]
     lines=[]
     running=True
-    t_start=time.localtime()
+    t_start=time.localtime()# добавление первых точек
     b=r(field)
     pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
     b=r(field)
@@ -148,13 +149,13 @@ def game(circle_Color, pos):
         clock.tick(60)
 
         t_now=time.localtime()
-        if (t_now.tm_sec - t_start.tm_sec) % 3 == 0:
+        if (t_now.tm_sec - t_start.tm_sec) % 3 == 0:# добавление пассажиров
             dot=randint(0,len(dots)-1)
             dots[dot]['pas'] += 8
             time.sleep(1)
             money += 10
 
-        if len(field) != 0:
+        if len(field) != 0:                                # добавление точек
             if (t_now.tm_sec - t_start.tm_sec) % 15 == 0:
                 b=r(field)
                 pygame.draw.circle(screen, circle_Color, (b.coords[0]*80, b.coords[1]*80), 13, 2)
@@ -166,14 +167,14 @@ def game(circle_Color, pos):
                 running=False
                 pygame.quit()
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:     # сохроаняем выбранные координаты точек
                 print(event.pos)
                 for i in dots:
                     if ((i['coords'][0]-10 <= event.pos[0] and i['coords'][0]+10 >= event.pos[0]) and (i['coords'][1]-10 <= event.pos[1] and i['coords'][1]+10 >= event.pos[1])):
                         C.append((i['coords'][0], i['coords'][1]))
                         print(C)
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3: #добавляем линии
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3: # добавляем линии
                 for i in range(1,len(C)):
                     pygame.draw.aaline(screen, PINK, C[i-1], C[i], 2)
                     planes.append({'start': pygame.Rect(C[i-1][0]-10, C[i-1][1]-10, 20, 20), 'end': pygame.Rect(C[i][0]-10, C[i][1]-10, 20, 20)})
@@ -192,7 +193,7 @@ def game(circle_Color, pos):
         text = font_type.render(str(money), True, (0, 0, 0))
         screen.blit(text, (1118, 34))
 
-        for j in dots:
+        for j in dots:                        # изменение цвета точек
 
             if j['pas']<=10:
                 circle_Color = GREEN
@@ -202,7 +203,7 @@ def game(circle_Color, pos):
                 circle_Color =  RED
 
             pygame.draw.circle(screen, circle_Color, (j['coords'][0], j['coords'][1]), 13, 5)
-        for j in lines:
+        for j in lines:                                                                        # перемещние самолётов
             pygame.draw.aaline(screen, PINK, j['start'], j['end'], 2)
 
         for i in range(len(planes)):
@@ -215,8 +216,9 @@ def game(circle_Color, pos):
         pygame.display.update()
         mainClock.tick(60)
 
+#-------------------------------------------------------------------------------
 
-def rules():
+def rules():               # меню правил
     rules = pygame.image.load('rules.png').convert_alpha()
     screen.blit(rules, (0, 0))
     running = True
@@ -232,10 +234,9 @@ def rules():
         pygame.display.update()
         mainClock.tick(60)
 
+#-------------------------------------------------------------------------------
 
-
-
-def save():
+def save():           # меню сохранений
     save = pygame.image.load('save.png').convert_alpha()
     screen.blit(save, (0, 0))
     running = True
